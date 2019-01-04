@@ -1,0 +1,127 @@
+# __X-MAS CTF 2018__ 
+## _Hanukkah_
+
+## Information
+**Category:** | **Points:** | **Writeup Author**
+--- | --- | ---
+Crypto | 50 | MiKHalyCH
+
+**Description:** 
+
+> Most of the old religions celebrate Christmas in one way or another!
+>
+> [hannukah.zip](../hannukah.zip)
+>
+> Author: Gabies
+
+### Hanukkah.py
+```py
+from Crypto.Util.number import isPrime
+from random import getrandbits
+
+def genKey(k):
+
+	while True:
+		r=getrandbits(k)
+		while(r%2):
+			r=getrandbits(k)
+	
+		p =  3 * r**2 +  2 * r + 7331
+		q = 17 * r**2 + 18 * r + 1339
+		n = p * q
+
+		if(isPrime(p) and isPrime(q)):
+			return (p,q) , n
+
+def encrypt(m,pubkey):
+
+	c=m**2 % pubkey
+	return c
+
+privkey,pubkey = genKey(256)
+
+flag = open('flag.txt').read().strip()
+while(len(flag)<125):
+	flag+='X'
+flag = int(flag.encode('hex'),16)
+
+ct=encrypt(flag,pubkey)
+
+with open('flag.enc','w') as f:
+	f.write('ct = ' + str(ct))
+
+with open('pubkey.txt','w') as f:
+	f.write('pubkey = ' + str(pubkey))
+
+with open('privkey.txt','w') as f:
+	f.write('privkey = ' + str(privkey))
+```
+
+### pubkey.doc
+```
+pubkey = 577080346122592746450960451960811644036616146551114466727848435471345510503600476295033089858879506008659314011731832530327234404538741244932419600335200164601269385608667547863884257092161720382751699219503255979447796158029804610763137212345011761551677964560842758022253563721669200186956359020683979540809
+```
+
+### flag.enc
+```
+ct = 66888784942083126019153811303159234927089875142104191133776750131159613684832139811204509826271372659492496969532819836891353636503721323922652625216288408158698171649305982910480306402937468863367546112783793370786163668258764837887181566893024918981141432949849964495587061024927468880779183895047695332465
+```
+
+From `encrypt` we can understand that it uses [Rabin](https://en.wikipedia.org/wiki/Rabin_cryptosystem) cryptosystem.
+
+`genkey` function shows that `p` and `q` are polynomials from same `r`. 
+We know that `N` is polynomial too:
+```py
+N = p*q = 
+= (3*r**2 + 2*r + 7331)*(17*r**2 + 18*r + 1339) = 
+= 51*r**4 + 88*r**3 + 128680*r**2 + 134636*r + 9816209
+```
+
+So firstly we need to recover `r`, by using z3 solver.
+```py
+from z3 import *
+pubkey = 577080346122592746450960451960811644036616146551114466727848435471345510503600476295033089858879506008659314011731832530327234404538741244932419600335200164601269385608667547863884257092161720382751699219503255979447796158029804610763137212345011761551677964560842758022253563721669200186956359020683979540809
+r = Int('r')
+solve(51*r**4 + 88*r**3 + 128680*r**2 + 134636*r + 9816209 == pubkey)
+```
+
+The code above, gives us result
+`[r = 57998468644974352708871490365213079390068504521588799445473981772354729547806]`
+
+By evaluating value of p and q, we get
+```
+p = 10091467095486219386412925657038008994079750950818412327803970543226016138203830244281982855685318564926478052110051579561412412195187526673196657177343851
+q = 57184980207755243189673245389882050966451922054637669857555833078280758116488758040722202677901531011185810382486226074211480927769032477693263422201893659
+```
+Second step is decrypting Rabin. Just because `p = q = 3 (mode 4)` we can easily compute `x_p` and `x_q`:
+```py 
+x_p = sqrt(ct) % p = pow(ct, (p + 1) // 4, p)
+x_q = sqrt(ct) % q = pow(ct, (q + 1) // 4, q)
+```
+
+Now we have 4 candidates for `m`. We can choose the right one because we know that flag was padded with some `X` characters at end.
+
+```py
+from gmpy2 import gcdext
+from Crypto.Util.number import long_to_bytes as ltb
+p = 10091467095486219386412925657038008994079750950818412327803970543226016138203830244281982855685318564926478052110051579561412412195187526673196657177343851
+q = 57184980207755243189673245389882050966451922054637669857555833078280758116488758040722202677901531011185810382486226074211480927769032477693263422201893659
+ct = 66888784942083126019153811303159234927089875142104191133776750131159613684832139811204509826271372659492496969532819836891353636503721323922652625216288408158698171649305982910480306402937468863367546112783793370786163668258764837887181566893024918981141432949849964495587061024927468880779183895047695332465
+
+def decrypt(ct, p, q):
+    N = p*q
+    x_p = pow(ct, (p + 1) // 4, p)
+    x_q = pow(ct, (q + 1) // 4, q)
+    _, a, b = gcdext(p, q)
+    
+    x1 = (x_p*b*q + x_q*a*p) % N
+    x2 = (x_p*b*q - x_q*a*p) % N
+    for pt in (x1, N-x1, x2, N-x2):
+        if int(bin(pt)[-8:], 2) == ord('X'):
+            return pt
+
+print ltb(decrypt(ct,p,q))
+```
+
+### Flag 
+X-MAS{H4nukk4h_Rabb1_and_Rab1n_l0ok_4nd_s0und_v3ry_much_alik3_H4nukk4h}

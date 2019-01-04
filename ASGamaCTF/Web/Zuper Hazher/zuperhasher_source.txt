@@ -1,0 +1,5 @@
+<?php
+        if(isset($_GET["string"])){
+            $string = $_GET["string"];
+            passthru("echo " . $string . " | md5sum");
+        }
