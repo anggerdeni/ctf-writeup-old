@@ -21,23 +21,24 @@ $ file magwd
 magwd: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=83e3346da094e8945d1b188b1a4d4d8877f7159c, not stripped
 ```
 
-Setelah cek dengan `ltrace ./magwd`, input kita awalnya diubah dulu menjadi string lain (kemungkinan dengan xor), lalu dibandingkan dengan `mbO`^Ifco^DfifPqf@buMf^iFal@flRqQr`. Namun setelah cek beberapa kali, string yang berbeda akan ter xor dengan key yang berbeda. Maka coba lihat disassemble nya dengan ida.
+Setelah cek dengan `ltrace ./magwd`, input kita awalnya diubah dulu menjadi string lain, lalu dibandingkan dengan `mbO`^Ifco^DfifPqf@buMf^iFal@flRqQr`. Maka coba lihat disassemble nya dengan ida.
 
 #### main
 
 ![main_1](./images/main_1.png)  
-![main_2](./images/main_2.png) 
+![main_2](./images/main_2.png)  
 
 Pada bagian ini, program meminta input lalu disimpan pada `[rbp+src]`, setelah itu melakukan `malloc` dengan size 0x28. Address heap disimpan pada `[rbp+dest]`. Lalu string input kita dicopy pada address heap tersebut.
 
 Setelah itu, program memanggil fungsi `do_magic` lalu memanggil `magic` dengan parameter input kita.
-`magic` disini setelah dicek degan gdb ternyata terletak pada data segment.
-![info](./images/infomagic.png)
+`magic` disini setelah dicek degan gdb ternyata terletak pada data segment.  
+![info](./images/infomagic.png)  
 
 Lihat address magic yang ternyata terletak dalam range address .data segment. Isinya pun masih acak.
 
 #### do_magic
 ![do_magic](./images/do_magic.png)  
+
 Fungsi ini mengubah isi dari address `magic` menjadi sebuah fungsi yang utuh.
 
 #### magic

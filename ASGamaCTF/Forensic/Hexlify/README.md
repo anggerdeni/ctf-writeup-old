@@ -30,9 +30,7 @@ f.close()
 ```
 
 ### Result
-```
 ![hasil](./hasil)
-```
 
 ### Flag
 CTF{R3v3rs3_4_h3x_t4bl3_be_l1ke}
