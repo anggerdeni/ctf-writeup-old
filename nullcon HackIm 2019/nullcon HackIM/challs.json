@@ -1,0 +1,201 @@
+{
+    "crypto": {
+        "2FUN": {
+            "Description": "24 bit key space is brute forceable so how about 48 bit key space? flag is hackim19{decrypted flag} \r\n\r\n16 bit plaintext: b'0467a52afa8f15cfb8f0ea40365a6692'\r\nflag: b'04b34e5af4a1f5260f6043b8b9abb4f8'\r\n", 
+            "Files": [
+                "5ba055b3143b52f008fda4a96d7911c1/2fun.py"
+            ], 
+            "Hint": [], 
+            "ID": 6, 
+            "Points": 484
+        }, 
+        "GenuineCounterMode": {
+            "Description": "server runs on \r\n\r\n`nc crypto.ctf.nullcon.net 5000`\r\n\r\ncan you get the flag?", 
+            "Files": [
+                "08a822df60b9506d4ea03a18a9435cac/server.py"
+            ], 
+            "Hint": [], 
+            "ID": 7, 
+            "Points": 491
+        }, 
+        "Singular": {
+            "Description": "Alice and Bob calculated a shared key on the elliptic curve \r\ny^2 = x^3 + 330762886318172394930696774593722907073441522749*x^2 + 6688528763308432271990130594743714957884433976*x + 759214505060964991648440027744756938681220132782\r\np = 785482254973602570424508065997142892171538672071\r\nG = (1, 68596750097555148647236998220450053605331891340)\r\n(Alice's public key) P = d1 * G = (453762742842106273626661098428675073042272925939, 680431771406393872682158079307720147623468587944)\r\n(Bob's poblic key) Q = d2 * G = (353016783569351064519522488538358652176885848450, 287096710721721383077746502546881354857243084036)\r\nThey have calculated K = d1 * d2 * G. They have taken K's x coordinate in decimal and took sha256 of it and used it for AES ECB to encrypt the flag.\r\n\r\nHere is the encrypted flag: 480fd106c9a637d22fddd814965742236eb314c1b8fb68e70a7c7445ff04476082f8b9026c49d27110ba41b95e9f51dc\r\n", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 8, 
+            "Points": 498
+        }
+    }, 
+    "misc": {
+        "Captcha Forest": {
+            "Description": "A baby captcha just for you.\r\n\r\n`nc misc.ctf.nullcon.net 6001`", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 9, 
+            "Points": 293
+        }, 
+        "Captcha Forest Harder": {
+            "Description": "A harder captcha for you if you felt the first one was too easy\r\n\r\n`nc miscc.ctf.nullcon.net 6002`", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 11, 
+            "Points": 486
+        }, 
+        "cat": {
+            "Description": "Decrypt the file to unlock the door", 
+            "Files": [
+                "84844e85c5425520ceabf8c9794a5ae9/final"
+            ], 
+            "Hint": [], 
+            "ID": 10, 
+            "Points": 356
+        }, 
+        "mlAuth": {
+            "Description": "Fool that mlAuth\r\n\r\nFiles\r\n\r\nhttps://drive.google.com/file/d/1QvZBVns4ei1fqnhDe2uEBKiaEeRkdVwl/view?usp=sharing\r\n\r\nServer\r\n\r\nhttp://ml.ctf.nullcon.net/predict", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 23, 
+            "Points": 500
+        }
+    }, 
+    "pwn": {
+        "HackIM Shop": {
+            "Description": "Welcome to our bookstore, check if you find anything interesting.\r\n\r\n\r\n`nc pwn.ctf.nullcon.net 4002`", 
+            "Files": [
+                "fde401a23e785ca48cda0b8a55bdf963/challenge"
+            ], 
+            "Hint": [], 
+            "ID": 14, 
+            "Points": 486
+        }, 
+        "babypwn": {
+            "Description": "Can you exploit the basic bugs?\r\n\r\n`nc pwn.ctf.nullcon.net 4001`", 
+            "Files": [
+                "c55d1d62a4428d9b294f8054d3fb3546/challenge"
+            ], 
+            "Hint": [], 
+            "ID": 13, 
+            "Points": 499
+        }, 
+        "easy-shell": {
+            "Description": "Go get yourself a shell while it's possible\r\n\r\n`nc pwn.ctf.nullcon.net 4010`", 
+            "Files": [
+                "723b680044bb9c47519f10a62675297c/gg"
+            ], 
+            "Hint": [], 
+            "ID": 12, 
+            "Points": 483
+        }, 
+        "peasy-shell": {
+            "Description": "one more easy shell for free!\r\n\r\n`nc pwn.ctf.nullcon.net 4011`", 
+            "Files": [
+                "35479e5db7500167c8857c5e5613c08d/gg"
+            ], 
+            "Hint": [], 
+            "ID": 21, 
+            "Points": 499
+        }, 
+        "tudutudututu": {
+            "Description": "I found a ToDo service to maintain my daily tasks. My life is sorted now!\r\n\r\n`nc pwn.ctf.nullcon.net 4003`", 
+            "Files": [
+                "ef66b0ef197f60d89fcd0e9765acae28/challenge"
+            ], 
+            "Hint": [], 
+            "ID": 15, 
+            "Points": 498
+        }, 
+        "winblows": {
+            "Description": "Try your hands on win exploitation too. Assume Windows 2012 R2 standard. Process launched under appjail.\r\n\r\n\r\n`nc 13.234.59.47 714`", 
+            "Files": [
+                "c43a3296b0c4f4a7bdcdc2e7c4ba9abb/dist.zip"
+            ], 
+            "Hint": [], 
+            "ID": 22, 
+            "Points": 500
+        }
+    }, 
+    "reverse": {
+        "0bfusc8 much": {
+            "Description": "I opened this in GHIDRA but it crashed. halp pls", 
+            "Files": [
+                "51c964e6b3000baf7b67621ec0c0cc2e/dist.zip"
+            ], 
+            "Hint": [], 
+            "ID": 1, 
+            "Points": 500
+        }, 
+        "Dr Owl": {
+            "Description": "Owlee Owl hits again. Here's a challenge. Lets see hoo solves it first. \ud83e\udd89\ud83e\udd89", 
+            "Files": [
+                "7027501f3dd7bb2e969881e7eed422e0/dr-owl"
+            ], 
+            "Hint": [], 
+            "ID": 2, 
+            "Points": 500
+        }, 
+        "c0mpute": {
+            "Description": "Can you float like a butterfly? Sting like a bee...\r\n\r\nNote: This challenge does not follow the standard flag format. It looks like : th1s_1s_my_fl4g", 
+            "Files": [
+                "e67adaba4e624f7d2b7795c45ed0f2ce/dist.zip"
+            ], 
+            "Hint": [], 
+            "ID": 3, 
+            "Points": 500
+        }, 
+        "rev3al": {
+            "Description": "qemu is for n00bs. Ours is the real deal!\r\n\r\nNote: This challenge does not follow the standard flag format. It looks like : th1s_1s_my_fl4g", 
+            "Files": [
+                "66b437d36dfa2cec42ea76cd86fd64e7/dist.zip"
+            ], 
+            "Hint": [], 
+            "ID": 4, 
+            "Points": 499
+        }, 
+        "wond3rw4ll": {
+            "Description": "Marty, we have to go back\r\n\r\nNote: This challenge does not follow the standard flag format. It looks like : th1s_1s_my_fl4g", 
+            "Files": [
+                "30e7e181a3108d6df7155c34cc0bd5fd/dist.zip"
+            ], 
+            "Hint": [], 
+            "ID": 5, 
+            "Points": 500
+        }
+    }, 
+    "web": {
+        "BabyJS": {
+            "Description": "Run your javascript code inside this page and preview it because of hackers we have only limited functions\r\n\r\nhttp://web4.ctf.nullcon.net:8080/\r\nmirror : http://web5.ctf.nullcon.net:8080/", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 18, 
+            "Points": 492
+        }, 
+        "blog": {
+            "Description": "Its just a blog\r\n\r\nhttp://web3.ctf.nullcon.net:8080/", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 20, 
+            "Points": 498
+        }, 
+        "credz": {
+            "Description": "Alice is a admin of abc company in india. He knows about hackers and makes a system that can login only from his system and only his browser which is chrome.\r\n\r\nhttp://web3.ctf.nullcon.net/\r\n\r\nHint:  ummm maybe that image has something to do with it.\r\nHint2: Admin is uses fresh chrome", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 17, 
+            "Points": 500
+        }, 
+        "mime checkr": {
+            "Description": "upload and check the mime type\r\n\r\nhttp://web1.ctf.nullcon.net/\r\n\r\nHint1: Do you think containers could speak like humans?", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 16, 
+            "Points": 500
+        }, 
+        "proton": {
+            "Description": "Alice web site has been hacked and hackers removed the submit post option and posted some unwanted messages can you get them?\r\n\r\nhttp://web2.ctf.nullcon.net:4545/\r\nMirror : http://web6.ctf.nullcon.net:4545/\r\n\r\nHint: mango can be eaten in 60 seconds\r\nHint2: Mongo Mongo Mongo !!! and this is not a sql Injection", 
+            "Files": [], 
+            "Hint": [], 
+            "ID": 19, 
+            "Points": 500
+        }
+    }
+}
