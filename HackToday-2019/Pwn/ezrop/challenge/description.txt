@@ -1,0 +1,11 @@
+ezrop
+410 points | 7 solves
+
+key is the new val. yo.
+
+http://challs.codepwnda.id/pwn/ezrop.zip
+
+nc not.codepwnda.id 30000
+
+author: circleous
+

@@ -1,0 +1,9 @@
+intro
+250 points | 26 solves
+
+hi i want to introduce my self. My name is friska and .............
+
+format flag: hacktoday{uppercase_flag}
+
+author: monhack
+

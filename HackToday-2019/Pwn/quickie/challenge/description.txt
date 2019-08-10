@@ -1,0 +1,9 @@
+quickie
+500 points | 0 solve
+
+http://challs.codepwnda.id/pwn/quickie.zip
+
+nc not.codepwnda.id 31337
+
+author: circleous
+

@@ -1,0 +1,25 @@
+memepy
+460 points | 5 solves
+
+http://not.codepwnda.id:50000/
+
+author: circleous
+______________________________
+
+Hint:
+@app.route("/fetch/<key>")
+def fetch(key):
+    key = b64decode(key)
+
+    if not key.startswith(b"http://") and not key.startswith(b"https://"):
+        return abort(404)
+
+    code = _fetch(key)
+
+    if code is None:
+        return abort(404)
+
+    code = code.replace('[', '').replace(']', '')
+    code = '<pre>' + code + '</pre>'
+
+pyCurl

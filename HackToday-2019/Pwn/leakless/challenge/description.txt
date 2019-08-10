@@ -1,0 +1,11 @@
+leakless
+498 points | 2 solves
+
+no view(), no surrender!
+
+nc not.codepwnda.id 30001
+
+https://challs.codepwnda.id/pwn/leakless.zip
+
+author: circleous
+<Paste>
