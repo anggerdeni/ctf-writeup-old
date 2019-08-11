@@ -67,7 +67,7 @@ v = --- This code section failed: ---
           65  RETURN_VALUE_LAMBDA
           -1  LAMBDA_MARKER
 
-Parse error at or near `None' instruction at offset -1
+Parse error at or near `None` instruction at offset -1
 y = lambda x: sum([ v(y, w) for y in range(ord(x)) for w in range(y) ])
 z = raw_input('Check flag anda disini :')
 u = [ y(i) for i in str(z) ]
@@ -141,7 +141,7 @@ print flag
 
 Script ini ternyata berjalan sangat lama, maka perlu dilakukan optimasi. Bagian yg paling menghambat jelas merupakan pemanggilan fungsi v secara recursive. Maka kita perlu mengubah implementasi funsgi ini.
 
-Kita coba jalankan implementasi fungsi y yand di dalamnya memanggil fungsi v saja :
+Kita coba rubah sedikit implementasi dari fungsi y sehingga sebelum melakukan sum, kita tampilkan semua hasil yg didapatkan.
 ```py
 def v(x,y):
     if (y==0):
@@ -151,28 +151,38 @@ def v(x,y):
 
     return v(x-1,y-1)+v(x-1,y)
 
+def y(x):
+    final_result = 0
+    tampung = []
+    for y in range(ord(x)):
+        tmp_result = 0
+        for w in range(y):
+            final_result += v(y,w)
+            tmp_result += v(y,w)
+        print "{} => {}".format(y, tmp_result)
+        tampung.append(tmp_result)
+    print "sum({}) = {}".format(tampung, final_result)
+    return final_result
+
 for i in range(10):
-    result = 0
-    for j in range(i):
-        result += v(i,j)
-    print i, result
+    y(i)
 ```
 
 Hasilnya: 
 ```
-0 0
-1 1
-2 3
-3 7
-4 15
-5 31
-6 63
-7 127
-8 255
-9 511
+sum([]) = 0
+sum([0]) = 0
+sum([0, 1]) = 1
+sum([0, 1, 3]) = 4
+sum([0, 1, 3, 7]) = 11
+sum([0, 1, 3, 7, 15]) = 26
+sum([0, 1, 3, 7, 15, 31]) = 57
+sum([0, 1, 3, 7, 15, 31, 63]) = 120
+sum([0, 1, 3, 7, 15, 31, 63, 127]) = 247
+sum([0, 1, 3, 7, 15, 31, 63, 127, 255]) = 502
 ```
 
-Ternyata fungsi ini akan mereturn nilai 2**n - 1 yang kemudian oleh fungsi y akan di sum dengan nilai-nilai sebelumnya. Langsung bikin solvernya:  
+Dengan melihat hasilnya, ternyata pada setiap iterasi y menghasilkan nilai 2**y - 1 lalu semua nilai itu dijumlahkan dan menjadi return value dari fungsi `y`. Langsung bikin solvernya:  
 ```py
 from string import printable
 from sys import stdout
